@@ -1,0 +1,14 @@
+{
+  "name": "colorful-balloon-party",
+  "version": "1.0.0",
+  "description": "彩色氣球派對兒童遊戲",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "npx @electron/packager . 'Colorful Balloon Party' --platform=darwin --arch=universal --out=dist --overwrite"
+  },
+  "devDependencies": {
+    "@electron/packager": "^18.3.1",
+    "electron": "^29.1.5"
+  }
+}
