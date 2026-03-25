@@ -1,0 +1,333 @@
+/* style.css */
+:root {
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --sky-color: #a8e6cf;
+    --sky-bottom: #82ccdd;
+    --text-color: #485460;
+    --grass-color: #2ed573;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--sky-color), var(--sky-bottom));
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    touch-action: manipulation; /* 防止雙擊放大 */
+}
+
+#game-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 裝飾：太陽與雲朵 */
+.sun {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 100px;
+    height: 100px;
+    background: #ffd32a;
+    border-radius: 50%;
+    box-shadow: 0 0 50px #ffb142;
+    animation: rotate 20s linear infinite;
+    z-index: 1;
+}
+
+.cloud {
+    position: absolute;
+    background: #fff;
+    border-radius: 50px;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+.cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.cloud-1 {
+    width: 150px;
+    height: 50px;
+    top: 15%;
+    left: 10%;
+    animation: float-cloud 40s linear infinite;
+}
+.cloud-1::before { width: 70px; height: 70px; top: -30px; left: 20px; }
+.cloud-1::after { width: 50px; height: 50px; top: -20px; right: 20px; }
+
+.cloud-2 {
+    width: 120px;
+    height: 40px;
+    top: 25%;
+    right: 15%;
+    animation: float-cloud 35s linear infinite reverse;
+}
+.cloud-2::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+.cloud-2::after { width: 40px; height: 40px; top: -15px; right: 15px; }
+
+.cloud-3 {
+    width: 180px;
+    height: 60px;
+    top: 5%;
+    left: 60%;
+    animation: float-cloud 50s linear infinite;
+}
+.cloud-3::before { width: 80px; height: 80px; top: -40px; left: 30px; }
+.cloud-3::after { width: 60px; height: 60px; top: -30px; right: 30px; }
+
+@keyframes float-cloud {
+    0% { transform: translateX(-100vw); }
+    100% { transform: translateX(100vw); }
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+.grass {
+    position: absolute;
+    bottom: -20px;
+    width: 110vw;
+    height: 100px;
+    background: var(--grass-color);
+    border-radius: 50% 50% 0 0;
+    left: -5vw;
+    z-index: 2;
+    box-shadow: inset 0 20px 20px rgba(0,0,0,0.1);
+}
+
+/* 頂部 UI 面板 */
+header {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.score-board, .timer-board {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.value {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+
+#timer {
+    color: #ff4757;
+}
+
+/* 遊戲開始/結束 覆蓋層 */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    display: flex;
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; display: none; }
+    to { opacity: 1; display: flex; }
+}
+
+#overlay-title {
+    font-size: 4rem;
+    color: var(--primary-color);
+    text-shadow: 2px 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+#overlay-desc {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+#final-score {
+    font-size: 2rem;
+    color: #feca57;
+    background: #fff;
+    padding: 10px 30px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+#final-score span {
+    color: #ff6b81;
+    font-size: 2.5rem;
+    font-weight: 900;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#start-btn {
+    padding: 15px 50px;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: white;
+    background: linear-gradient(45deg, #ff6b81, #ff4757);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 71, 87, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+
+#start-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(255, 71, 87, 0.6);
+}
+
+#start-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 5px 10px rgba(255, 71, 87, 0.4);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* 氣球容器與氣球樣式 */
+#balloon-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* 讓容器不阻擋點擊 */
+    z-index: 5;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 80px;
+    height: 100px;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    cursor: pointer;
+    pointer-events: auto; /* 氣球本身可以點擊 */
+    animation: floatUp 5s linear forwards;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    box-shadow: inset -10px -10px 20px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+}
+
+.balloon:active {
+    transform: scale(0.9);
+}
+
+/* 氣球的特有高光 */
+.balloon::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 25px;
+    height: 35px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    transform: rotate(45deg);
+}
+
+/* 氣球的結 */
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 12px solid inherit; /* 讓結的顏色同氣球 */
+}
+
+/* 氣球的繩子 */
+.string {
+    position: absolute;
+    bottom: -60px;
+    width: 2px;
+    height: 60px;
+    background: rgba(0,0,0,0.2);
+    transform-origin: top center;
+    animation: sway 2s ease-in-out infinite alternate;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-120vh) scale(1.1); }
+}
+
+@keyframes sway {
+    0% { transform: rotate(-10deg); }
+    100% { transform: rotate(10deg); }
+}
+
+/* 破裂粒子效果 */
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 4;
+}
+
+/* 手機版適應 */
+@media (max-width: 600px) {
+    #overlay-title { font-size: 3rem; }
+    header { padding: 0 15px; top: 10px; }
+    .score-board, .timer-board { padding: 8px 15px; font-size: 1.2rem; gap: 5px;}
+    .value { font-size: 1.5rem; }
+    .balloon { width: 60px; height: 75px; }
+    .string { bottom: -40px; height: 40px; }
+}
