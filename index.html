@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>彩色氣球派對 🎈</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 景觀裝飾 -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="sun"></div>
+        <div class="grass"></div>
+
+        <!-- 遊戲 UI -->
+        <header>
+            <div class="score-board">
+                <span class="label">分數:</span>
+                <span id="score" class="value">0</span>
+            </div>
+            <div class="timer-board">
+                <span class="label">時間:</span>
+                <span id="timer" class="value">30</span>
+            </div>
+        </header>
+
+        <!-- 氣球產生的區域 -->
+        <div id="balloon-container"></div>
+
+        <!-- 開始/結束畫面 -->
+        <div id="overlay" class="overlay active">
+            <h1 id="overlay-title">彩色氣球派對 🎈</h1>
+            <p id="overlay-desc">點擊氣球把它們戳破吧！</p>
+            <p id="final-score" class="hidden">你的得分是: <span>0</span></p>
+            <button id="start-btn">開始遊戲</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
